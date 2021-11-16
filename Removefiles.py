@@ -3,8 +3,8 @@ import shutil
 import time
 
 def removeFiles():
-    path = "D:/Downloads"
-    days = 30
+    path = "D:/Downloads/test"
+    days = 0
     # seconds = time.time(days)
     seconds = time.time() - (days * 8640)
 
@@ -17,7 +17,7 @@ def removeFiles():
                 for folder in folders:
                     folder_path = os.path.join(dir, folder)
                     if seconds >= ageOfFile(folder_path):
-						removeFolder(folder_path)
+                        removeFolder(folder_path)
                 for file in files:
                     file_path = os.path.join(dir, file)
                     if seconds >= ageOfFile(file_path):
@@ -30,12 +30,12 @@ def ageOfFile(path):
 
 def removeFolder(path):
     if not shutil.rmtree(path):
-		print("{path} is removed successfully")
-	else:
-		print("Unable to delete the "+ path)
+        print("{path} is removed successfully")
+    else:
+        print("Unable to delete the "+ path)
 
 def removeFile(path):
     if not os.remove(path):
         print("{path} is removed successfully")
-	else:
-		print("Unable to delete the "+ path)
+    else:
+        print("Unable to delete the "+ path)
