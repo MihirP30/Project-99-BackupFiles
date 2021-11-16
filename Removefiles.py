@@ -1,41 +1,22 @@
+from genericpath import isfile
 import os
 import shutil
 import time
 
-def removeFiles():
-    path = "D:/Downloads/test"
+def removeFilesInCurrentFolder(path):
     days = 0
-    # seconds = time.time(days)
-    seconds = time.time() - (days * 8640)
+    seconds = 1
 
     if os.path.exists(path):
         for dir, folders, files in os.walk(path):
-            if seconds >= ageOfFile(dir):
-                removeFolder(dir)
-                break
-            else:
-                for folder in folders:
-                    folder_path = os.path.join(dir, folder)
-                    if seconds >= ageOfFile(folder_path):
-                        removeFolder(folder_path)
-                for file in files:
-                    file_path = os.path.join(dir, file)
-                    if seconds >= ageOfFile(file_path):
-                        removeFile(file_path)
+            # print("directory: " + str(dir))
+            for file in files:
+                print("deleting file: " + file)
+                os.remove(dir + "/" + file)
+            for folder in folders:
+                newDir = path + "/" + folder
+                removeFilesInCurrentFolder(newDir)
+        print("deleting path " + path)
+        os.rmdir(path)
 
-
-def ageOfFile(path):
-    age = os.stat(path).st_ctime
-    return age
-
-def removeFolder(path):
-    if not shutil.rmtree(path):
-        print("{path} is removed successfully")
-    else:
-        print("Unable to delete the "+ path)
-
-def removeFile(path):
-    if not os.remove(path):
-        print("{path} is removed successfully")
-    else:
-        print("Unable to delete the "+ path)
+removeFilesInCurrentFolder("D:/Downloads/test")
